@@ -1,5 +1,7 @@
 using Endor.IncomeExpensesService.Database;
 using Endor.IncomeExpensesService.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -7,6 +9,8 @@ using System.Security.Claims;
 namespace Endor.IncomeExpensesService.Controllers;
 
 [ApiController]
+[Authorize]
+[EnableCors("AllowAll")]
 [Route("[controller]")]
 public class IncomeExpensesController : ControllerBase
 {
