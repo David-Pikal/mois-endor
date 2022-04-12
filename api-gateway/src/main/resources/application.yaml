@@ -1,8 +1,8 @@
 okta:
   oauth2:
-    client-secret: lU9hWly4yXWhOeY2JA444U_IubgqSzzDT0hXNp_l
-    client-id: 0oa4m4zmhxMRfGz1i5d7
-    issuer: https://dev-54064931.okta.com/oauth2/default
+    client-secret: m81BelJOLCO40dtyLoPfNF_RqAD2pLha1R5VIvCX
+    client-id: 0oa4n8f92lCiUL4mr5d7
+    issuer: https://dev-45372882.okta.com/oauth2/default
     redirect-uri: /login/oauth2/code/okta
 
 spring:
@@ -19,10 +19,12 @@ spring:
         ssl:
           useInsecureTrustManager: true
     routes:
-      - id: users
-        uri: lb://car-service
+        # TODO - solve service names
+      - id: bank
+        uri: lb://bank-api
         predicates:
-          - Path=/cars/**
+          # TODO - bank endpoints
+          - Path=/bank/**
         filters:
           - TokenRelay=
           - RemoveRequestHeader=Cookie
@@ -30,4 +32,8 @@ spring:
         uri: lb://IncomeExpensesService
         predicates:
           - Path=/IncomeExpenses/**
+        # TODO - security in .net microservice
+        filters:
+          - TokenRelay=
+          - RemoveRequestHeader=Cookie
           
