@@ -26,8 +26,8 @@ public class IncomeExpensesController : ControllerBase
     {
         return await mDbContext
             .IncomeExpenses
-            .Select(x => DbModelToApiModel(x))
             .Where(x => x.Owner == User.FindFirstValue(ClaimTypes.NameIdentifier))
+            .Select(x => DbModelToApiModel(x))
             .ToListAsync();
     }
 
@@ -167,7 +167,6 @@ public class IncomeExpensesController : ControllerBase
         return new IncomeExpenseApiModel(
             model.Id,
             model.IncomeExpenseType,
-            model.Value,
-            model.Owner);
+            model.Value);
     }
 }

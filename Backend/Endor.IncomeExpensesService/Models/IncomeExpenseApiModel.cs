@@ -3,5 +3,4 @@
 public record IncomeExpenseApiModel(
     Guid? Id,
     IncomeExpenseType? IncomeExpenseType,
-    decimal? Value,
-    string? Owner);
+    decimal? Value);
