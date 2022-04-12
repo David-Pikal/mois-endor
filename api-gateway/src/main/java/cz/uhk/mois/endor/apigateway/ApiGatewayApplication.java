@@ -12,9 +12,4 @@ public class ApiGatewayApplication {
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
 
-	// @Bean
-    // @LoadBalanced
-    // public WebClient.Builder loadBalancedWebClientBuilder() {
-    //     return WebClient.builder();
-    // }
 }
