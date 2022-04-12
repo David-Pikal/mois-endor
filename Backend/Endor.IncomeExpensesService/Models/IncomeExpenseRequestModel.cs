@@ -2,5 +2,4 @@
 
 public record IncomeExpenseRequestModel(
     IncomeExpenseType? IncomeExpenseType,
-    decimal? Value,
-    string? Owner);
+    decimal? Value);

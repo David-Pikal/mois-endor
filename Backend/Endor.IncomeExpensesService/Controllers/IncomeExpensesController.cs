@@ -2,6 +2,7 @@ using Endor.IncomeExpensesService.Database;
 using Endor.IncomeExpensesService.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Endor.IncomeExpensesService.Controllers;
 
@@ -22,6 +23,7 @@ public class IncomeExpensesController : ControllerBase
         return await mDbContext
             .IncomeExpenses
             .Select(x => DbModelToApiModel(x))
+            .Where(x => x.Owner == User.FindFirstValue(ClaimTypes.NameIdentifier))
             .ToListAsync();
     }
 
@@ -37,6 +39,11 @@ public class IncomeExpensesController : ControllerBase
             return NotFound();
         }
 
+        if (incomeExpenseDbModel.Owner != User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            return Unauthorized();
+        }
+
         return DbModelToApiModel(incomeExpenseDbModel);
 
     }
@@ -46,8 +53,7 @@ public class IncomeExpensesController : ControllerBase
         IncomeExpenseRequestModel incomeExpenseRequestModel)
     {
         if (!incomeExpenseRequestModel.IncomeExpenseType.HasValue ||
-            !incomeExpenseRequestModel.Value.HasValue ||
-            string.IsNullOrEmpty(incomeExpenseRequestModel.Owner))
+            !incomeExpenseRequestModel.Value.HasValue)
         {
             return BadRequest();
         }
@@ -56,7 +62,7 @@ public class IncomeExpensesController : ControllerBase
         {
             IncomeExpenseType = incomeExpenseRequestModel.IncomeExpenseType.Value,
             Value = incomeExpenseRequestModel.Value.Value,
-            Owner = incomeExpenseRequestModel.Owner
+            Owner = User.FindFirstValue(ClaimTypes.NameIdentifier)
         };
 
         var createdIncomeExpenseDbModel = mDbContext
@@ -87,6 +93,11 @@ public class IncomeExpensesController : ControllerBase
             return NotFound();
         }
 
+        if (incomeExpenseDbModel.Owner != User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            return Unauthorized();
+        }
+
         if (incomeExpenseRequestModel.IncomeExpenseType.HasValue)
         {
             incomeExpenseDbModel.IncomeExpenseType =
@@ -97,12 +108,6 @@ public class IncomeExpensesController : ControllerBase
         {
             incomeExpenseDbModel.Value =
                 incomeExpenseRequestModel.Value.Value;
-        }
-
-        if (!string.IsNullOrEmpty(incomeExpenseRequestModel.Owner))
-        {
-            incomeExpenseDbModel.Owner =
-                incomeExpenseRequestModel.Owner;
         }
 
         mDbContext.Update(incomeExpenseDbModel);
@@ -129,6 +134,11 @@ public class IncomeExpensesController : ControllerBase
         if (incomeExpenseDbModel == null)
         {
             return NotFound();
+        }
+
+        if (incomeExpenseDbModel.Owner != User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            return Unauthorized();
         }
 
         mDbContext
