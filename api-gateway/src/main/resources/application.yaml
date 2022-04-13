@@ -1,10 +1,8 @@
 okta:
   oauth2:
-    client-secret: m81BelJOLCO40dtyLoPfNF_RqAD2pLha1R5VIvCX
-    client-id: 0oa4n8f92lCiUL4mr5d7
     issuer: https://dev-45372882.okta.com/oauth2/default
-    redirect-uri: /login/oauth2/code/okta
-
+server:
+  port: 8082
 spring:
   application:
     name: gateway
