@@ -14,6 +14,8 @@ import java.security.Principal;
 import java.util.List;
 
 @Slf4j
+// TODO cors Vue
+//@CrossOrigin(origins = "https://localhost:blaPort")
 @RestController
 @RequestMapping("/bank")
 @AllArgsConstructor
@@ -23,7 +25,7 @@ public class BankController {
 
     @GetMapping("/payment")
     public List<Payment> paymentList(@RequestParam String dateFrom, @RequestParam String dateTo, @RequestParam int accountId) {
-        log.info(String.format("Payment from %s, to %s.", dateFrom, dateTo));
+        log.info(String.format("Get payments from %s, to %s.", dateFrom, dateTo));
 
         //        Mono<Object> result = webClient.get()
 //                .uri(uriBuilder -> uriBuilder
@@ -51,7 +53,7 @@ public class BankController {
     }
 
     // Get JWT
-    @GetMapping("/cars/principal/token")
+    @GetMapping("/principal/token")
     public String getPrincipal(Principal principal, Authentication authentication, @AuthenticationPrincipal Jwt jwt) {
         log.info(principal.getName());
         log.info(jwt.getTokenValue());

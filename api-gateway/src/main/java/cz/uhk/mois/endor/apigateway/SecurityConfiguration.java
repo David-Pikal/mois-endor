@@ -21,8 +21,6 @@ public class SecurityConfiguration {
             .authorizeExchange()
                 .anyExchange().authenticated()
                 .and()
-            .oauth2Login()
-                .and()
             .oauth2ResourceServer()
                 .jwt();
         return http.build();
