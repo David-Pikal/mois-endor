@@ -28,12 +28,15 @@ export default {
   methods: {
     async setup () {
       if (this.$root.authenticated) {
+        //const date = new Date();
+
         this.claims = await this.$auth.getUser()
         let accessToken = this.$auth.getAccessToken();
         console.log(`Authorization: Bearer ${accessToken}`);
         try {
-          let response = await axios.get('http://localhost:8082/bank/payment?dateFrom=2012-04-23T18%3A25%3A43.511Z&dateTo=2020-04-23T18%3A25%3A43.511Z&accountId=123',
-              { headers: {'Authorization': 'Bearer ' + accessToken } } );
+          let response = await axios.get('http://localhost:8082/bank/payment',
+              { headers: {'Authorization': 'Bearer ' + accessToken }, params: {dateFrom: '2012-04-23T18%3A25%3A43.511Z', 
+              dateTo: '2020-04-23T18%3A25%3A43.511Z', accountId: 123}} );
             // let response = await axios.get('http://localhost:8082/IncomeExpenses',
             //   { headers: {'Authorization': 'Bearer ' + accessToken } } );
           this.payments = response.data;

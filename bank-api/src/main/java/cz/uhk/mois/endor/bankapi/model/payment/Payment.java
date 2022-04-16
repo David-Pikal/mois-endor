@@ -1,5 +1,9 @@
-package cz.uhk.mois.endor.bankapi.model;
+package cz.uhk.mois.endor.bankapi.model.payment;
 
+import cz.uhk.mois.endor.bankapi.model.AdditionalInfo;
+import cz.uhk.mois.endor.bankapi.model.PartyAccount;
+import cz.uhk.mois.endor.bankapi.model.RecuringPayment;
+import cz.uhk.mois.endor.bankapi.model.Value;
 import lombok.Data;
 
 import java.io.Serializable;

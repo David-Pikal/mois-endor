@@ -1,7 +1,8 @@
 package cz.uhk.mois.endor.bankapi.controller;
 
 import cz.uhk.mois.endor.bankapi.BankApiFeign;
-import cz.uhk.mois.endor.bankapi.model.Payment;
+import cz.uhk.mois.endor.bankapi.model.payment.Payment;
+import cz.uhk.mois.endor.bankapi.model.transaction.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -44,6 +45,15 @@ public class BankController {
         return proxy.getPayments(dateFrom, dateTo, accountId);
     }
 
+    @GetMapping("/transaction")
+    public List<Transaction> transactionList(@RequestParam String dateFrom, @RequestParam String dateTo, @RequestParam int accountId) {
+        log.info(String.format("Get payments from %s, to %s.", dateFrom, dateTo));
+
+        // TODO accountId remove in the future
+        return proxy.getTransactions(dateFrom, dateTo, accountId);
+    }
+
+    // TODO - use this endpoint only in Insomnia to create data for FE
     @PostMapping("/payment")
     public Payment createPayment(@RequestBody @Valid Payment payment) {
         log.info("Trying to save this payment: " + payment);

@@ -1,4 +1,4 @@
-package cz.uhk.mois.endor.bankapi.model;
+package cz.uhk.mois.endor.bankapi.model.transaction;
 
 import lombok.Data;
 
