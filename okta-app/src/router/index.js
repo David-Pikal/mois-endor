@@ -1,22 +1,25 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { LoginCallback, navigationGuard } from "@okta/okta-vue";
-import HomeComponent from "@/components/Home";
-import LoginComponent from "@/components/Login";
-import ProfileComponent from "@/components/Profile";
+import HomeView from "@/views/HomeView";
+import LoginView from "@/views/LoginView";
+import ProfileView from "@/views/ProfileView";
+import SummariesView from "@/views/SummariesView";
+import AddIncomeExpenseView from "@/views/AddIncomeExpenseView";
+import PlansView from "@/views/PlansView";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: "/",
-      component: HomeComponent,
+      component: HomeView,
       meta: {
         requiresAuth: true,
       },
     },
     {
       path: "/login",
-      component: LoginComponent,
+      component: LoginView,
     },
     {
       path: "/login/callback",
@@ -24,10 +27,31 @@ const router = createRouter({
     },
     {
       path: "/profile",
-      component: ProfileComponent,
+      component: ProfileView,
       meta: {
         requiresAuth: true,
       },
+    },
+    {
+      path: "/summaries",
+      component: SummariesView,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: "/addincomeexpense",
+      component: AddIncomeExpenseView,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: "/plans",
+      component: PlansView,
+      meta: {
+        requiresAuth: true,
+      }
     },
   ],
 });
