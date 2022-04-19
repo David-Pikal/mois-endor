@@ -14,6 +14,9 @@ public class IncomeExpenseDbModel
     public IncomeExpenseType IncomeExpenseType { get; set; }
 
     [Required]
+    public string Date { get; set; }
+
+    [Required]
     public decimal Value { get; set; }
 
     [Required]
