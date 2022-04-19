@@ -1,5 +1,6 @@
 package cz.uhk.mois.endor.planservice.planservice.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Project {
 
     @Nullable
     private BigDecimal value;
+
 
     @OneToMany(mappedBy = "project")
     private List<Payment> payments;

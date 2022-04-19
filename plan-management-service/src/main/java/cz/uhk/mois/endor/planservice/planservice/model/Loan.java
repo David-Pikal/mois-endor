@@ -1,5 +1,8 @@
 package cz.uhk.mois.endor.planservice.planservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -29,6 +32,7 @@ public class Loan {
     private Integer userID;
 
     @Nullable
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private Project project;
 

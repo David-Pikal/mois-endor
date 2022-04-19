@@ -1,5 +1,8 @@
 package cz.uhk.mois.endor.planservice.planservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 import cz.uhk.mois.endor.planservice.planservice.util.Cycle;
 import cz.uhk.mois.endor.planservice.planservice.util.PaymentType;
@@ -39,6 +42,7 @@ public class Payment {
     private PaymentType paymentType;
 
     @Nullable
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private Project project;
 
