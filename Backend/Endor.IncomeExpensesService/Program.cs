@@ -29,7 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // discoverable by eureka server
-builder.Services.AddDiscoveryClient(builder.Configuration);
+//builder.Services.AddDiscoveryClient(builder.Configuration);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -38,11 +38,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors();
 
