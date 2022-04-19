@@ -10,7 +10,7 @@ namespace Endor.IncomeExpensesService.Controllers;
 
 [ApiController]
 [Authorize]
-[EnableCors("AllowAll")]
+[EnableCors]
 [Route("[controller]")]
 public class IncomeExpensesController : ControllerBase
 {
@@ -57,7 +57,8 @@ public class IncomeExpensesController : ControllerBase
         IncomeExpenseRequestModel incomeExpenseRequestModel)
     {
         if (!incomeExpenseRequestModel.IncomeExpenseType.HasValue ||
-            !incomeExpenseRequestModel.Value.HasValue)
+            !incomeExpenseRequestModel.Value.HasValue ||
+            string.IsNullOrEmpty(incomeExpenseRequestModel.Date))
         {
             return BadRequest();
         }
@@ -65,6 +66,7 @@ public class IncomeExpensesController : ControllerBase
         var incomeExpenseDbModel = new IncomeExpenseDbModel()
         {
             IncomeExpenseType = incomeExpenseRequestModel.IncomeExpenseType.Value,
+            Date = incomeExpenseRequestModel.Date,
             Value = incomeExpenseRequestModel.Value.Value,
             Owner = User.FindFirstValue(ClaimTypes.NameIdentifier)
         };
@@ -112,6 +114,12 @@ public class IncomeExpensesController : ControllerBase
         {
             incomeExpenseDbModel.Value =
                 incomeExpenseRequestModel.Value.Value;
+        }
+
+        if (!string.IsNullOrEmpty(incomeExpenseRequestModel.Date))
+        {
+            incomeExpenseDbModel.Date =
+                incomeExpenseRequestModel.Date;
         }
 
         mDbContext.Update(incomeExpenseDbModel);
@@ -167,6 +175,7 @@ public class IncomeExpensesController : ControllerBase
         return new IncomeExpenseApiModel(
             model.Id,
             model.IncomeExpenseType,
+            model.Date,
             model.Value);
     }
 }

@@ -3,6 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import OktaVue from "@okta/okta-vue";
 import { oktaAuth } from "./okta";
+import BalmUI from 'balm-ui';
+import BalmUIPlus from 'balm-ui-plus';
+import 'balm-ui-css';
 
 createApp(App)
   .use(router)
@@ -15,4 +18,6 @@ createApp(App)
       router.push("/login");
     },
   })
+  .use(BalmUI)
+  .use(BalmUIPlus)
   .mount("#app");

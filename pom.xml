@@ -11,5 +11,6 @@
         <module>discovery-service</module>
         <module>api-gateway</module>
         <module>bank-api</module>
+        <module>plan-management-service</module>
     </modules>
 </project>
