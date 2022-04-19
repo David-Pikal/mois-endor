@@ -24,7 +24,7 @@ public class PaymentController {
 
     @PostMapping(path = "/add")
     public String addNewPayment(@RequestParam String title, @RequestParam String value, @RequestParam String startDate, @RequestParam Integer userID,
-                               @RequestParam String endDate, @RequestParam String cycle, @RequestParam String paymentType, @RequestParam Integer projectID) {
+                               @RequestParam String endDate, @RequestParam String cycle, @RequestParam String paymentType, @RequestParam(required = false) Integer projectID) {
 
         Date endD = null;
         if (!endDate.equals("")) {
@@ -32,15 +32,15 @@ public class PaymentController {
         }
 
         Project project = null;
-        if (projectID > 0) {
+        if (projectID != null && projectID > 0) {
             Optional<Project> optional = projectRepository.findById(projectID);
             if (optional.isPresent()) {
                 project = optional.get();
             }
         }
 
-        Payment pmnt = new Payment(title, new BigDecimal(value), Date.valueOf(startDate), endD, userID, Cycle.valueOf(cycle),
-                PaymentType.valueOf(paymentType), project);
+        Payment pmnt = new Payment(title, new BigDecimal(value), Date.valueOf(startDate), endD, userID, Cycle.valueOf(cycle.toUpperCase()),
+                PaymentType.valueOf(paymentType.toUpperCase()), project);
         paymentRepository.save(pmnt);
 
         return "Saved";
