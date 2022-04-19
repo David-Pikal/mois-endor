@@ -19,7 +19,8 @@ builder.Services
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin()
+    options.AddDefaultPolicy(builder => builder
+        .AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader());
 });
@@ -29,7 +30,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // discoverable by eureka server
-//builder.Services.AddDiscoveryClient(builder.Configuration);
+builder.Services.AddDiscoveryClient(builder.Configuration);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -38,14 +39,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseCors();
 
-app.UseAuthentication();
-
-app.UseAuthorization();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllers();
 

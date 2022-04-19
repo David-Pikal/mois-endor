@@ -1,7 +1,6 @@
 using Endor.IncomeExpensesService.Database;
 using Endor.IncomeExpensesService.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -10,7 +9,6 @@ namespace Endor.IncomeExpensesService.Controllers;
 
 [ApiController]
 [Authorize]
-[EnableCors("AllowAll")]
 [Route("[controller]")]
 public class IncomeExpensesController : ControllerBase
 {
@@ -24,6 +22,8 @@ public class IncomeExpensesController : ControllerBase
     [HttpGet(Name = "GetAllIncomeExpense")]
     public async Task<ActionResult<IEnumerable<IncomeExpenseApiModel>>> GetAll()
     {
+        Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         return await mDbContext
             .IncomeExpenses
             .Where(x => x.Owner == User.FindFirstValue(ClaimTypes.NameIdentifier))
@@ -47,6 +47,8 @@ public class IncomeExpensesController : ControllerBase
         {
             return Unauthorized();
         }
+
+        Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
         return DbModelToApiModel(incomeExpenseDbModel);
 
@@ -76,6 +78,8 @@ public class IncomeExpensesController : ControllerBase
 
         await mDbContext
             .SaveChangesAsync();
+
+        Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
         return CreatedAtAction(
             nameof(Get),
@@ -125,6 +129,8 @@ public class IncomeExpensesController : ControllerBase
             return NotFound();
         }
 
+        Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         return NoContent();
     }
 
@@ -151,6 +157,8 @@ public class IncomeExpensesController : ControllerBase
 
         await mDbContext
             .SaveChangesAsync();
+
+        Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
         return NoContent();
     }
