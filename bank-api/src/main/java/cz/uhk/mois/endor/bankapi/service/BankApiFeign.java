@@ -1,4 +1,4 @@
-package cz.uhk.mois.endor.bankapi;
+package cz.uhk.mois.endor.bankapi.service;
 
 import cz.uhk.mois.endor.bankapi.model.payment.Payment;
 import cz.uhk.mois.endor.bankapi.model.transaction.Transaction;
