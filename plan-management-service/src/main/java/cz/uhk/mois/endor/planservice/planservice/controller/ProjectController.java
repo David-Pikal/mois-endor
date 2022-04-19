@@ -36,7 +36,7 @@ public class ProjectController {
 
         Optional<Project> optional = projectRepository.findById(id);
         if (optional.isEmpty()) {
-            return "id does not exist";
+            return "Id does not exist";
         }
 
         Project project = optional.get();
@@ -65,9 +65,9 @@ public class ProjectController {
     public String deleteUserProject(@RequestParam Integer id) {
         try {
             projectRepository.deleteById(id);
-            return "deleted";
+            return "Deleted";
         } catch (EmptyResultDataAccessException e) {
-            return "id does not exist";
+            return "Id does not exist";
         }
     }
 }

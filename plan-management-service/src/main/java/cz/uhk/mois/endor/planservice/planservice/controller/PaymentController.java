@@ -39,12 +39,12 @@ public class PaymentController {
     public String updatePayment(@RequestParam Integer id, @RequestParam String title, @RequestParam String value, @RequestParam String startDate,
                                 @RequestParam String endDate, @RequestParam String cycle, @RequestParam String paymentType, @RequestParam(required = false) Integer projectID) {
 
-        Optional<Payment> optionalP = paymentRepository.findById(id);
-        if (optionalP.isEmpty()) {
-            return "id does not exist";
+        Optional<Payment> optional = paymentRepository.findById(id);
+        if (optional.isEmpty()) {
+            return "Id does not exist";
         }
 
-        Payment payment = optionalP.get();
+        Payment payment = optional.get();
 
         payment.setTitle(title);
         payment.setValue(new BigDecimal(value));
@@ -66,15 +66,10 @@ public class PaymentController {
 
     @GetMapping(path = "/project")
     public Iterable<Payment> getUserProjectPayments(@RequestParam Integer projectID) {
-        Project project;
-        if (projectID == null || projectID <= 0) {
+        Project project = getProject(projectID);
+        if (project == null) {
             return null;
         }
-        Optional<Project> optional = projectRepository.findById(projectID);
-        if (optional.isEmpty()) {
-           return null;
-        }
-        project = optional.get();
 
         return paymentRepository.findByProject(project);
     }
@@ -88,9 +83,9 @@ public class PaymentController {
     public String deleteUserPayment(@RequestParam Integer id) {
         try {
             paymentRepository.deleteById(id);
-            return "deleted";
+            return "Deleted";
         } catch (EmptyResultDataAccessException e) {
-            return "id does not exist";
+            return "Id does not exist";
         }
     }
 
