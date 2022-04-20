@@ -1,12 +1,17 @@
 <template>
   <div id="home">
-    <h1>MOIS-ENDOR</h1>
-
+    
     <div v-if="this.$root.authenticated">
-      <p>Welcome, {{claims.name}}!</p>
-      <p>
-        {{this.payments}}
-      </p>
+      
+      <div id="base-card" v-shadow="6">
+        <h1 class="home-title">MOIS-ENDOR</h1>
+        <div class="content-items">
+          <p>Welcome, {{claims.name}}!</p>
+          <p>
+            {{this.payments}}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -49,3 +54,26 @@ export default {
   }
 }
 </script>
+
+
+<style>
+#base-card {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 50vh;
+  margin: 50px;
+  padding: 0px 50px;
+}
+
+.home-title {
+  display: flex;
+  justify-content: space-around;
+}
+
+.content-items {
+  display: flex;
+  justify-content: center;
+}
+
+</style>
