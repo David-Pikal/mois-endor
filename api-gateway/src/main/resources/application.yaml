@@ -21,8 +21,14 @@ spring:
       - id: bank
         uri: lb://bank-api
         predicates:
-          # TODO - bank endpoints
           - Path=/bank/**
+        filters:
+          - TokenRelay=
+          - RemoveRequestHeader=Cookie
+      - id: planservice
+        uri: lb://plan-service
+        predicates:
+          - Path=/plan/**
         filters:
           - TokenRelay=
           - RemoveRequestHeader=Cookie
@@ -30,8 +36,4 @@ spring:
         uri: lb://IncomeExpensesService
         predicates:
           - Path=/IncomeExpenses/**
-        # TODO - security in .net microservice
-        filters:
-          - TokenRelay=
-          - RemoveRequestHeader=Cookie
           
