@@ -13,7 +13,7 @@ import java.sql.Date;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "/loan")
+@RequestMapping(path = "/plan/loan")
 public class LoanController {
 
     @Autowired

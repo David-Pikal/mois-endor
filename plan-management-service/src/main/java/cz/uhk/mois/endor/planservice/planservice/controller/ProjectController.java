@@ -12,7 +12,7 @@ import java.sql.Date;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "/project")
+@RequestMapping(path = "/plan/project")
 public class ProjectController {
 
     @Autowired

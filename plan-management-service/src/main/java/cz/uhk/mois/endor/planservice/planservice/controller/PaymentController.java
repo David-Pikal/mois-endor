@@ -16,7 +16,7 @@ import java.sql.Date;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/payment")
+@RequestMapping(path="/plan/payment")
 public class PaymentController {
     @Autowired
     private PaymentRepository paymentRepository;
