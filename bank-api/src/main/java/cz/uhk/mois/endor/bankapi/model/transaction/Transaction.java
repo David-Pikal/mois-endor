@@ -9,7 +9,7 @@ public record Transaction(
         Value value,
         PartyAccount partyAccount,
         String partyDescription,
-        String direction,
+        Direction direction,
         String transactionType,
         String valueDate,
         String bookingDate,

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -24,7 +23,7 @@ public class BankController {
     private BankApiFeign proxy;
 
     @GetMapping("/payment")
-    public List<Payment> paymentList(@RequestParam String dateFrom, @RequestParam String dateTo, @RequestParam int accountId) {
+    public BigDecimal paymentList(@RequestParam String dateFrom, @RequestParam String dateTo, @RequestParam int accountId) {
         // get all payments between given dates
         var rawPayments = proxy.getPayments(dateFrom, dateTo, accountId);
 
@@ -38,43 +37,41 @@ public class BankController {
             var firstPayment = LocalDate.parse(payment.recuringPayment().firstPayment().substring(0,10));
             var lastPayment = LocalDate.parse(payment.recuringPayment().lastPayment().substring(0,10));
 
+            // enhanced switch - do not need break statement
             long numberOfPayments = 0;
             switch (payment.recuringPayment().interval()) {
-                // enhanced switch - do not need break statement
-                case WEEK -> {
-                    numberOfPayments = ChronoUnit.WEEKS.between(firstPayment, lastPayment);
-                    log.info(String.format("Number of weeks between %s and %s is: %s.", firstPayment, lastPayment, numberOfPayments));
-                }
-                case MONTH -> {
-                    numberOfPayments = ChronoUnit.MONTHS.between(firstPayment, lastPayment);
-                    log.info(String.format("Number of months between %s and %s is: %s.", firstPayment, lastPayment, numberOfPayments));
-                }
-                case YEAR -> {
-                    numberOfPayments = ChronoUnit.YEARS.between(firstPayment, lastPayment);
-                    log.info(String.format("Number of years between %s and %s is: %s.", firstPayment, lastPayment, numberOfPayments));
-                }
+                case WEEK -> numberOfPayments = ChronoUnit.WEEKS.between(firstPayment, lastPayment);
+                case MONTH -> numberOfPayments = ChronoUnit.MONTHS.between(firstPayment, lastPayment);
+                case YEAR -> numberOfPayments = ChronoUnit.YEARS.between(firstPayment, lastPayment);
                 default -> log.error("Payment do not have Interval!");
             }
-            sum = sum.add(new BigDecimal(payment.value().amount() * (numberOfPayments + 1)));
-            log.info(String.format("Big decimal: %s", sum.toEngineeringString()));
+            log.info(String.format("Number of %s between %s and %s is: %s.", payment.recuringPayment().interval(), firstPayment, lastPayment, numberOfPayments));
+            //sum = sum.add(new BigDecimal(payment.value().amount().multiply() * (numberOfPayments + 1)));
+            sum = sum.subtract(payment.value().amount().multiply(new BigDecimal(numberOfPayments + 1)));
+            log.info(String.format("Big decimal: %s", sum));
         }
 
-        // TODO - return value
-        return proxy.getPayments(dateFrom, dateTo, accountId);
+        return sum;
     }
 
     @GetMapping("/transaction")
-    public List<Transaction> transactionList(@RequestParam String dateFrom, @RequestParam String dateTo, @RequestParam int accountId) {
+    public BigDecimal transactionList(@RequestParam String dateFrom, @RequestParam String dateTo, @RequestParam int accountId) {
         log.info(String.format("Get transactions from %s, to %s.", dateFrom, dateTo));
         var sum = new BigDecimal(0);
         var rawTransactions = proxy.getTransactions(dateFrom, dateTo, accountId);
 
-        // TODO sum transactions
         for (Transaction transaction : rawTransactions) {
-            log.info(transaction.toString());
+            var amount = transaction.value().amount();
+            var direction = transaction.direction();
+            switch (direction) {
+                case INCOMING -> sum = sum.add(amount);
+                case OUTCOMING -> sum = sum.subtract(amount);
+                default -> log.error("Wrong direction.");
+            }
+            log.info(String.format("Transaction direction: %s with amount: %s.", direction, amount));
         }
 
-        return proxy.getTransactions(dateFrom, dateTo, accountId);
+        return sum;
     }
 
 }

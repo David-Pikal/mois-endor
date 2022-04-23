@@ -1,6 +1,8 @@
 package cz.uhk.mois.endor.bankapi.model.transaction;
 
+import java.math.BigDecimal;
+
 public record OriginalValue(
-    Integer amount,
+    BigDecimal amount,
     String currency
 ) {}
