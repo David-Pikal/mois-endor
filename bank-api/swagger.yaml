@@ -1,0 +1,80 @@
+swagger: '2.0'
+info:
+  description: Api Documentation
+  version: '1.0'
+  title: Api Documentation
+  termsOfService: urn:tos
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+host: localhost:8081
+basePath: /
+tags:
+  - name: bank-controller
+    description: Bank Controller
+paths:
+  /bank/payment:
+    get:
+      tags:
+        - bank-controller
+      summary: paymentList
+      operationId: paymentListUsingGET
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: dateFrom
+          in: query
+          description: ISO-format - e.g. 2020-01-23T18:25:43.511Z
+          required: true
+          type: string
+        - name: dateTo
+          in: query
+          description: ISO-format - e.g. 2020-01-23T18:25:43.511Z
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: number
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /bank/transaction:
+    get:
+      tags:
+        - bank-controller
+      summary: transactionList
+      operationId: transactionListUsingGET
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: dateFrom
+          in: query
+          description: ISO-format - e.g. 2020-01-23T18:25:43.511Z
+          required: true
+          type: string
+        - name: dateTo
+          in: query
+          description: ISO-format - e.g. 2020-01-23T18:25:43.511Z
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: number
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found

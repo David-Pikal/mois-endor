@@ -17,7 +17,6 @@ spring:
         ssl:
           useInsecureTrustManager: true
     routes:
-        # TODO - solve service names
       - id: bank
         uri: lb://bank-api
         predicates:
