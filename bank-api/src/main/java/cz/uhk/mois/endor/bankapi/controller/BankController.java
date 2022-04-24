@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -22,8 +24,8 @@ public class BankController {
 
     private BankApiFeign proxy;
 
-    @GetMapping("/payment")
-    public BigDecimal paymentList(@RequestParam String dateFrom, @RequestParam String dateTo) {
+    @GetMapping("/payment/value")
+    public BigDecimal paymentValue(@RequestParam String dateFrom, @RequestParam String dateTo) {
 
         // parse Strings - need only date part
         var dateFromParsed = LocalDate.parse(dateFrom.substring(0, 10));
@@ -81,8 +83,8 @@ public class BankController {
         return sum;
     }
 
-    @GetMapping("/transaction")
-    public BigDecimal transactionList(@RequestParam String dateFrom, @RequestParam String dateTo) {
+    @GetMapping("/transaction/value")
+    public BigDecimal transactionsValue(@RequestParam String dateFrom, @RequestParam String dateTo) {
         log.info(String.format("Get transactions from %s, to %s.", dateFrom, dateTo));
         var sum = new BigDecimal(0);
         var rawTransactions = proxy.getTransactions(dateFrom, dateTo, 123);
@@ -101,4 +103,32 @@ public class BankController {
         return sum;
     }
 
+    @GetMapping("/transaction")
+    public List<Transaction> transactionList(@RequestParam String dateFrom, @RequestParam String dateTo) {
+        return proxy.getTransactions(dateFrom, dateTo, 123);
+    }
+
+    @GetMapping("/payment")
+    public List<Payment> paymentList(@RequestParam String dateFrom, @RequestParam String dateTo) {
+        // parse Strings - need only date part
+        var dateFromParsed = LocalDate.parse(dateFrom.substring(0, 10));
+        var dateToParsed = LocalDate.parse(dateTo.substring(0, 10));
+
+        if(dateToParsed.isBefore(dateFromParsed))  {
+            return Collections.emptyList();
+        }
+
+        // get all payments between given dates - there is mistake in BANK-API
+        var payments = proxy.getPayments(dateFrom, dateTo, 123)
+                .stream().filter(
+                        payment -> LocalDate.parse(payment.recuringPayment().firstPayment().substring(0, 10)).isBefore(dateToParsed)
+                                &&
+                                dateFromParsed.isBefore(
+                                        LocalDate.parse(payment.recuringPayment().lastPayment().substring(0, 10))
+                                )
+                ).toList();
+
+        log.info(String.format("Get payments from %s, to %s.", dateFrom, dateTo));
+        return payments;
+    }
 }

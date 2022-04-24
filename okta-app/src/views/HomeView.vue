@@ -34,11 +34,14 @@ export default {
         let accessToken = this.$auth.getAccessToken();
         console.log(`Authorization: Bearer ${accessToken}`);
         try {
-          let response = await axios.get('http://localhost:8082/bank/payment',
-              { headers: {'Authorization': 'Bearer ' + accessToken }, params: {dateFrom: '2012-04-23T18%3A25%3A43.511Z', 
-              dateTo: '2020-04-23T18%3A25%3A43.511Z', accountId: 123}} );
+          // let response = await axios.get('http://localhost:8082/bank/transaction',
+          //     { headers: {'Authorization': 'Bearer ' + accessToken }, params: {dateFrom: '2012-04-23T18%3A25%3A43.511Z', 
+          //     dateTo: '2020-04-23T18%3A25%3A43.511Z', accountId: 123}} );
             // let response = await axios.get('http://localhost:8082/IncomeExpenses',
             //   { headers: {'Authorization': 'Bearer ' + accessToken } } );
+            let response = await axios.get('https://mois-endor-api-gateway.herokuapp.com/bank/transaction',
+              { headers: {'Authorization': 'Bearer ' + accessToken }, params: {dateFrom: '2012-04-23T18%3A25%3A43.511Z', 
+              dateTo: '2020-04-23T18%3A25%3A43.511Z', accountId: 123}} );
           this.payments = response.data;
         }
         catch (error) {
