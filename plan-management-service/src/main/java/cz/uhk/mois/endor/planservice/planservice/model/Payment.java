@@ -33,7 +33,7 @@ public class Payment {
     private Date endDate;
 
     @Column(nullable = false)
-    private Integer userID;
+    private String userID;
 
     @Column(nullable = false)
     private Cycle cycle;
@@ -49,7 +49,7 @@ public class Payment {
 
     public Payment() {}
 
-    public Payment(String title, BigDecimal value, Date startDate, @Nullable Date endDate, Integer userID, Cycle cycle, PaymentType paymentType, @Nullable Project project) {
+    public Payment(String title, BigDecimal value, Date startDate, @Nullable Date endDate, String userID, Cycle cycle, PaymentType paymentType, @Nullable Project project) {
         this.title = title;
         this.value = value;
         this.startDate = startDate;
@@ -88,11 +88,11 @@ public class Payment {
         this.startDate = startDate;
     }
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

@@ -28,7 +28,7 @@ public class Loan {
     private BigDecimal installment;
 
     @Column(nullable = false)
-    private Integer userID;
+    private String userID;
 
     @Nullable
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -37,7 +37,7 @@ public class Loan {
 
     public Loan() {}
 
-    public Loan(BigDecimal value, Date startDate, Integer numberOfInstallments, BigDecimal installment, Integer userID, @Nullable Project project) {
+    public Loan(BigDecimal value, Date startDate, Integer numberOfInstallments, BigDecimal installment, String userID, @Nullable Project project) {
         this.value = value;
         this.startDate = startDate;
         this.numberOfInstallments = numberOfInstallments;
@@ -82,11 +82,11 @@ public class Loan {
         this.installment = installment;
     }
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

@@ -23,7 +23,7 @@ public class LoanController {
     private ProjectRepository projectRepository;
 
     @PostMapping(path = "/add")
-    public String addNewLoan(@RequestParam String value, @RequestParam String startDate, @RequestParam Integer userID,
+    public String addNewLoan(@RequestParam String value, @RequestParam String startDate, @RequestParam String userID,
                                 @RequestParam Integer numberOfInstallments, @RequestParam String installment, @RequestParam(required = false) Integer projectID) {
 
         Loan loan = new Loan(new BigDecimal(value), Date.valueOf(startDate), numberOfInstallments, new BigDecimal(installment), userID, getProject(projectID));
@@ -54,7 +54,7 @@ public class LoanController {
     }
 
     @GetMapping(path = "/all")
-    public Iterable<Loan> getAllUserLoans(@RequestParam Integer userID) {
+    public Iterable<Loan> getAllUserLoans(@RequestParam String userID) {
         return loanRepository.findByUserID(userID);
     }
 

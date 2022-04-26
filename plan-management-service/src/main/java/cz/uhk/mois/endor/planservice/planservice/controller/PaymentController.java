@@ -26,7 +26,7 @@ public class PaymentController {
 
     @PostMapping(path = "/add")
     public String addNewPayment(@RequestParam String title, @RequestParam String value, @RequestParam String startDate, @RequestParam String endDate,
-                                @RequestParam Integer userID, @RequestParam String cycle, @RequestParam String paymentType, @RequestParam(required = false) Integer projectID) {
+                                @RequestParam String userID, @RequestParam String cycle, @RequestParam String paymentType, @RequestParam(required = false) Integer projectID) {
 
         Payment pmnt = new Payment(title, new BigDecimal(value), Date.valueOf(startDate), DateParser.formatDate(endDate), userID, Cycle.valueOf(cycle.toUpperCase()),
                 PaymentType.valueOf(paymentType.toUpperCase()), getProject(projectID));
@@ -60,7 +60,7 @@ public class PaymentController {
     }
 
     @GetMapping(path = "/all")
-    public Iterable<Payment> getAllUserPayments(@RequestParam Integer userID) {
+    public Iterable<Payment> getAllUserPayments(@RequestParam String userID) {
         return paymentRepository.findByUserID(userID);
     }
 

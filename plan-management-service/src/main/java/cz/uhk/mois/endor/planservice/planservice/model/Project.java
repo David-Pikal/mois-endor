@@ -19,7 +19,7 @@ public class Project {
     private String title;
 
     @Column(nullable = false)
-    private Integer userID;
+    private String userID;
 
     @Column(nullable = false)
     private Date startDate;
@@ -39,7 +39,7 @@ public class Project {
 
     public Project () {}
 
-    public Project(String title, Integer userID, Date startDate, @Nullable Date endDate, @Nullable BigDecimal value) {
+    public Project(String title, String userID, Date startDate, @Nullable Date endDate, @Nullable BigDecimal value) {
         this.title = title;
         this.userID = userID;
         this.startDate = startDate;
@@ -59,11 +59,11 @@ public class Project {
         this.title = title;
     }
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

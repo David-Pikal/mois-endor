@@ -19,7 +19,7 @@ public class ProjectController {
     private ProjectRepository projectRepository;
 
     @PostMapping(path = "/add")
-    public String addNewProject(@RequestParam String title, @RequestParam String value, @RequestParam Integer userID, @RequestParam String startDate,
+    public String addNewProject(@RequestParam String title, @RequestParam String value, @RequestParam String userID, @RequestParam String startDate,
                                 @RequestParam String endDate) {
 
         Date endD = DateParser.formatDate(endDate);
@@ -52,7 +52,7 @@ public class ProjectController {
     }
 
     @GetMapping(path = "/all")
-    public Iterable<Project> getAllUserProjects(@RequestParam Integer userID) {
+    public Iterable<Project> getAllUserProjects(@RequestParam String userID) {
         return projectRepository.findByUserID(userID);
     }
 

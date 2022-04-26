@@ -7,5 +7,5 @@ import java.util.List;
 
 @NoRepositoryBean
 public interface BaseRepository<T, ID> extends CrudRepository<T, ID> {
-    List<T> findByUserID(ID id);
+    List<T> findByUserID(String id);
 }
