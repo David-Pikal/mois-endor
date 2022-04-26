@@ -9,6 +9,9 @@
         <div class="ccsMyChart">
             <MyChart :someData="evolutionValues" :someLabels="evolutionFormatedDates"/>
         </div>
+        <div class="ccsMyChart">
+            <MyChart :someData="transactionValues" :someLabels="evolutionFormatedDates"/>
+        </div>
     </div>
     
 </template>
@@ -25,12 +28,13 @@ export default {
         return { 
             currentBalance: 0,
             date: [],
-            distance: "weeks",
+            distance: "months",
             distanceNum: 7,
             scale: 5,
             evolutionDates: [],
             evolutionFormatedDates: [],
             evolutionValues: [],
+            transactionValues: [],
         }
     },
 
@@ -87,14 +91,13 @@ export default {
         },
 
         async setupEvolutionValues() {
-            //const distancePast = new Date("1000-01-01")
             for (let i = 0; i < this.evolutionDates.length; i++) { 
                 const backDay = new Date(this.evolutionDates[i])
                 const distancePast = new Date(this.evolutionDates[i])
                 distancePast.setDate(backDay.getDate() - this.distanceNum)
                 console.log(distancePast)
-                const value = this.getDataWithIndex({ dateFrom:distancePast.toISOString(), dateTo:backDay.toISOString(), index:i })
-                this.evolutionValues[i] = value
+                this.getDataWithIndex({ dateFrom:distancePast.toISOString(), dateTo:backDay.toISOString(), index:i })
+                this.getTransactionsWithIndex({ dateFrom:distancePast.toISOString(), dateTo:backDay.toISOString(), index:i })
             }
         },
 
@@ -109,6 +112,18 @@ export default {
             )
             this.evolutionValues[index] = response
             console.log(this.evolutionValues[index])
+        },
+
+        async getTransactionsWithIndex({ dateFrom, dateTo, index }) {
+            const token = this.$auth.getAccessToken()
+            const response = await new apiClient().getMyApi(
+                {
+                    accessToken:token,
+                    url: "/bank/transaction/value", 
+                    params: { dateFrom: dateFrom, dateTo: dateTo }, 
+                }
+            )
+            this.transactionValues[index] = response            
         },
 
         setupDistance(){
