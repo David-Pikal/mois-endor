@@ -62,7 +62,7 @@ export default {
             const response = await new apiClient().getMyApi(
                 {
                     accessToken:token,
-                    url: "/bank/payment/value", 
+                    url: "/bank/transaction/value", 
                     params: { dateFrom: dateFrom, dateTo: dateTo }, 
                 }
             )
