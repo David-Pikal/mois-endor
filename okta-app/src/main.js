@@ -7,6 +7,8 @@ import BalmUI from 'balm-ui';
 import BalmUIPlus from 'balm-ui-plus';
 import 'balm-ui-css';
 
+import "@/assets/scss/main.scss"
+
 createApp(App)
   .use(router)
   .use(OktaVue, {
