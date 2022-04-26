@@ -81,17 +81,19 @@ export default {
             for (let i = 0; i <= this.scale; i++) { 
                 const weekAgo = new Date(currentDay.getTime())
                 weekAgo.setDate(currentDay.getDate() - (this.distanceNum * i) )
-                console.log(weekAgo)
+                //console.log(weekAgo)
                 this.evolutionDates[i] = weekAgo
             }
         },
 
         async setupEvolutionValues() {
-            const distancePast = new Date("1000-01-01").toISOString()
+            //const distancePast = new Date("1000-01-01")
             for (let i = 0; i < this.evolutionDates.length; i++) { 
-                const backDay = new Date(this.evolutionDates[i]).toISOString()
-                console.log(backDay)
-                const value = this.getDataWithIndex({ dateFrom:distancePast, dateTo:backDay, index:i })
+                const backDay = new Date(this.evolutionDates[i])
+                const distancePast = new Date(this.evolutionDates[i])
+                distancePast.setDate(backDay.getDate() - this.distanceNum)
+                console.log(distancePast)
+                const value = this.getDataWithIndex({ dateFrom:distancePast.toISOString(), dateTo:backDay.toISOString(), index:i })
                 this.evolutionValues[i] = value
             }
         },

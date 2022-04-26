@@ -54,9 +54,9 @@ export default {
       clickMe() {
         this.chartData.labels.splice(0,100)
         for (let i = 0; i < this.someData.length; i++) { 
-          this.chartData.datasets[0].data[i] = this.someData[i];
+          this.chartData.datasets[0].data[i] = this.someData[this.someData.length - 1 - i];
         }
-        for (let i = 0; i < 5; i++) {
+        for (let i = this.someLabels.length - 1; i >= 0; i--) {
           this.chartData.labels.push(this.someLabels[i])
         }
       }
