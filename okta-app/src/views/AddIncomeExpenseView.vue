@@ -131,7 +131,7 @@ export default {
 }
 
 .container-form {
-  margin: 30px;
+  margin: 30px 0px;
   padding: 30px;
   display: flex;
   justify-content: center;

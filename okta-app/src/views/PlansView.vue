@@ -47,10 +47,14 @@
     </div>
 
     <div v-show="active == 1" class="container-form">
-      <PlanRow :key="componentKey" :edit=false />
+      <PlanHome />
     </div>
 
     <div v-show="active == 2" class="container-form">
+      <PlanRow :key="componentKey" :edit=false />
+    </div>
+
+    <div v-show="active == 3" class="container-form">
       <PlanRow :key="componentKey" :edit=true />
     </div>
       
@@ -61,6 +65,7 @@
 import apiClient from "@/api/apiClient"
 import { useValidator } from 'balm-ui';
 import PlanRow from "@/components/Plan/PlanRow"
+import PlanHome from "@/components/Plan/PlanHome"
 
 const validations = {
   title: { label: 'Title', validator: 'required' },
@@ -70,7 +75,7 @@ const validations = {
 };
 
 export default {
-  components:{ PlanRow },
+  components:{ PlanRow, PlanHome },
   data() {
     return {
       balmUI: useValidator(),
@@ -80,6 +85,7 @@ export default {
       componentKey: 0,
       items: [
         { text: 'ADD PROJECT', icon: 'add_circle'},
+        { text: 'PLANS HOME', icon: 'home'},
         { text: 'MY PROJECTS', icon: 'list'},
         { text: 'EDIT PROJECTS', icon: 'edit'},
       ],
@@ -90,6 +96,7 @@ export default {
   methods: {
 
     async onSubmit() {
+      console.log("tady")
       let result = this.balmUI.validate(this.formData);
       let { valid, message } = result;
       this.message = message;
@@ -100,24 +107,28 @@ export default {
         console.log(this.formData.value)
         console.log(this.formData.startDate)
         console.log(this.formData.endDate)
-        const user = await this.$auth.getUser()
+        // const user = await this.$auth.getUser()
         const token = this.$auth.getAccessToken()
         const response = await new apiClient().getMyApi(
           {
             accessToken:token,
             url: "/plan/project/add",
             method: "POST",
-            data: {
+            params: {
               "title": this.formData.title,
               "value": this.formData.value,
               "startDate": this.formData.startDate,
               "endDate": this.formData.endDate,
-              "userID": user.sub
+              "userID": 3
               }
           })
 
-        this.formData.date = ''
-        this.formData.amount = ''
+        // "userID": user.sub
+        // TODO change back
+        this.formData.title = ''
+        this.formData.value = ''
+        this.formData.startDate = ''
+        this.formData.endDate = ''
         this.componentKey += 1
         console.log(response)
       }
@@ -134,8 +145,8 @@ export default {
 }
 
 .container-form {
-  margin: 30px;
-  padding: 30px;
+  margin: 30px 0px;
+  padding: 30px 0px;
   display: flex;
   justify-content: center;
 }

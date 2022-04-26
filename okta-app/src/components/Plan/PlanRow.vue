@@ -1,24 +1,28 @@
 <template>
     <div class="table">
-        <div class="row-div-date">
-            <ui-rangepicker v-model="date" outlined :labels="['Start Date', 'End Date']">
-                <template #separator>-</template>
-            </ui-rangepicker>
-        </div>
-
         <table v-if="!edit" class="table">
             <div class="row-div">
                 <tr class="row" v-shadow="6">
-                    <td><h2>Title</h2></td>
-                    <td><h2>Start date</h2></td>
-                    <td><h2>End date</h2></td>
-                    <td><h2>Value</h2></td>
+                    <td><h3>Title</h3></td>
+                    <td><h3>Start date</h3></td>
+                    <td><h3>End date</h3></td>
+                    <td><h3>Value</h3></td>
+                    <td><h3>Value / Month</h3></td>
                 </tr>
             </div>
-            <PlanItem v-for="(item, index) in sortMe()" :key="index" :item="item" :dateStart="date[0]" :dateEnd="date[1]" />
+            <PlanItem v-for="(item, index) in sortMe()" :key="index" :item="item"/>
         </table>
         <table v-else class="table">
-            <PlanEdit v-for="(item, index) in sortMe()" :key="index" :item="item" :dateStart="date[0]" :dateEnd="date[1]" />
+            <div class="row-div">
+                <tr class="row" v-shadow="6">
+                    <td><h3>Title</h3></td>
+                    <td><h3>Start date</h3></td>
+                    <td><h3>End date</h3></td>
+                    <td><h3>Value</h3></td>
+                    <td><h3>Button</h3></td>
+                </tr>
+            </div>
+            <PlanEdit v-for="(item, index) in sortMe()" :key="index" :item="item"/>
         </table>
     </div>
 </template>
@@ -38,7 +42,6 @@ export default {
     data(){
         return{
             myData: [],
-            date: []
         }
     },
 
@@ -48,13 +51,16 @@ export default {
 
     methods:{
         async getData(){
-            const user = await this.$auth.getUser()
+            // const user = await this.$auth.getUser()
             const token = this.$auth.getAccessToken()
             const response = await new apiClient().getMyApi(
                 {
                     accessToken:token,
                     url: "/plan/project/all", 
-                    params: { userID: user.sub }, 
+                    params: { 
+                        // userID: user.sub 
+                        userID: 3 
+                    }, 
                 }
             )
             this.myData = response
@@ -91,7 +97,7 @@ export default {
 
 .row-div {
   margin: auto;
-  width: 80%;
+  width: 90%;
   padding: 10px;
 }
 

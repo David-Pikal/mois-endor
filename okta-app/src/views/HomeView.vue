@@ -4,7 +4,7 @@
       <h2>MY BANK</h2>
     </div>
 
-    <div class="container-form">
+    <div class="container-form" v-shadow="6">
       <BankCard />
     </div>
       
@@ -15,13 +15,17 @@
 import BankCard from "@/components/Home/BankCard"
 
 export default {
-  components:{ BankCard, 
-  
-  },
+  components:{ BankCard },
 }
 </script>
 
 
-<style>
+<style scoped>
+
+.container-title {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
 
 </style>

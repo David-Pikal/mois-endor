@@ -1,13 +1,14 @@
 <template>
-    <div class="row-div" v-if="filterDate(result[1])">
+    <div class="row-div">
     <tr class="row" v-shadow="6">
         <div class="row-content">
+            <td class="item">{{ result[0] }}</td>
             <td class="item">{{ formatDate(result[1]) }}</td>
-            <td class="item" v-if="result[0] == 0"> + {{ result[2].toFixed(2) }} Kč</td>
-            <td class="item" v-if="result[0] == 1"> - {{ result[2].toFixed(2) }} Kč</td>
+            <td class="item">{{ formatDate(result[2]) }}</td>
+            <td class="item">{{ result[3].toFixed(2) }} Kč</td>
         </div>
         <td class="item">
-            <ui-fab extended @click="removeRow(result[3])">
+            <ui-fab extended @click="removeRow(result[4])">
                 <span>Delete</span>
                 <template #after="{ iconClass }">
                     <ui-icon :class="iconClass">delete</ui-icon>
@@ -27,17 +28,17 @@ import moment from 'moment';
 export default {
   name: "PlanEdit",
   props: {
-      dateStart: String,
-      dateEnd: String,
       item: { type: Object, required: true }
   },
   computed:{
     result(){
       return [
-          this.item.incomeExpenseType,
-          this.item.date,
+        this.item.title,
+          this.item.startDate,
+          this.item.endDate,
           this.item.value,
           this.item.id,
+          // this.item.userID,
         ]
     }
   },
@@ -58,7 +59,8 @@ export default {
         await new apiClient().getMyApi({
             accessToken:token,
             method: "DELETE", 
-            url: "/IncomeExpenses/" + idItem
+            url: "/plan/project/delete",
+            params: { id: idItem },
             }
         )
         await new apiClient().getMyApi({accessToken:token})
@@ -89,7 +91,7 @@ export default {
 
 .row-div {
   margin: auto;
-  width: 80%;
+  width: 100%;
   padding: 10px;
 }
 

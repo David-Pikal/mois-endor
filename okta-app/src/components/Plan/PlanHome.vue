@@ -127,13 +127,13 @@ export default {
             }
         },
 
-        returnNumberPerMonth(item, dateFrom, dateTo) {
-          const startDate = item.startDate
-          const end = item.endDate
-          const value = item.value
-          const isInside = 
-          moment()          
-        }
+        // returnNumberPerMonth(item, dateFrom, dateTo) {
+        //   const startDate = item.startDate
+        //   const end = item.endDate
+        //   const value = item.value
+        //   const isInside = 
+        //   moment()          
+        // }
     },
 }
 </script>
