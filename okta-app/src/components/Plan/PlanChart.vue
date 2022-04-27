@@ -39,7 +39,7 @@ export default {
           labels: [],
           datasets: [
             {
-              label: 'Data One',
+              label: 'Plan of Expenses',
               backgroundColor: '#f87979',
               data: []
             }

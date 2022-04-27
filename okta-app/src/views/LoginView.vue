@@ -1,6 +1,10 @@
 <template>
   <div class="login">
-    <div id="okta-signin-container"></div>
+    <div id="okta-signin-container">
+      <div class="container-title">
+        <h2>MOIS ENDOR</h2>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,3 +29,15 @@ export default {
   }
 }
 </script>
+
+<style>
+
+#okta-sign-in.auth-container.main-container {
+  margin: 0px auto 8px auto;
+}
+
+#okta-sign-in.auth-container .okta-sign-in-header {
+  display: none;
+}
+
+</style>

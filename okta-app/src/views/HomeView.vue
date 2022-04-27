@@ -1,7 +1,7 @@
 <template>
     
     <div class="container-title">
-      <h2>MY FINANCES</h2>
+      <h2>HOME</h2>
     </div>
 
     <div class="container-form" v-shadow="6">

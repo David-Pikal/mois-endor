@@ -36,6 +36,10 @@ export default {
         type: Number,
         default: 100
       },
+      myColor: {
+        type: String,
+        default: "#f87979"
+      }
     },
 
     data() {
@@ -44,8 +48,8 @@ export default {
           labels: [],
           datasets: [
             {
-              label: 'Data One',
-              backgroundColor: '#f87979',
+              label: '',
+              backgroundColor: '#fff',
               data: []
             }
           ]
@@ -64,7 +68,7 @@ export default {
         for (let i = this.someLabels.length - 1; i >= 0; i--) {
           this.chartData.labels.push(this.someLabels[i])
         }
-
+        this.chartData.datasets[0].backgroundColor = this.myColor
         this.chartData.datasets[0].label = this.isTransaction ? "Transaction" : "Payments"
         console.log(this.label)
       }

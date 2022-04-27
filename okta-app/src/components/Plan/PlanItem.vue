@@ -26,7 +26,7 @@ export default {
   computed:{
     result(){
       return [
-        this.item.title,
+          this.item.title,
           this.item.startDate,
           this.item.endDate,
           this.item.value,

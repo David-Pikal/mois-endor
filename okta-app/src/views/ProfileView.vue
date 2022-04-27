@@ -1,6 +1,6 @@
 <template>
   <div class="container-title">
-    <h2>USER INFO</h2>
+    <h2>USER</h2>
   </div>
 
   <div v-shadow="6">

@@ -34,6 +34,7 @@
             :someLabels="evolutionFormatedDates" 
             :key="componentKey"
             :isTransaction=false
+            myColor="#FECEAB"
             />
         </div>
         <div class="ccsMyChart">
@@ -42,6 +43,7 @@
             :someLabels="evolutionFormatedDates" 
             :key="componentKey" 
             :isTransaction=true
+            myColor="#99B898"
             />
         </div>
     </div>
@@ -205,6 +207,10 @@ export default {
         },
 
         async resetup(){
+            this.evolutionDates = []
+            this.evolutionFormatedDates = []
+            this.evolutionValues = []
+            this.transactionValues = []
             await this.getEvolution()
             for (let i = 0; i < this.evolutionDates.length; i++) { 
                 this.evolutionFormatedDates[i] = dayjs(this.evolutionDates[i]).format('DD. MM. YYYY');

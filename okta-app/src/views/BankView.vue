@@ -1,7 +1,7 @@
 <template>
 
     <div class="container-title">
-      <h2>MY BANK</h2>
+      <h2>BANK</h2>
     </div>
 
     <div class="container" v-shadow="6">

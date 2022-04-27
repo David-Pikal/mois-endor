@@ -19,7 +19,7 @@
             </router-link>
 
             <router-link to="/addincomeexpense">
-                <NavBarRow iconName="payment" labelName="Add income/expense" />
+                <NavBarRow iconName="payment" labelName="Income / Expense" />
             </router-link>
 
             <router-link to="/plans">
@@ -29,7 +29,7 @@
             <ui-list-divider/>
 
             <router-link to="/profile">
-              <NavBarRow iconName="account_circle" labelName="Profile" />
+              <NavBarRow iconName="account_circle" labelName="User" />
             </router-link>
 
             <ui-list-divider/>
@@ -52,7 +52,6 @@
 
 <script>
 
-import apiClient from "@/api/apiClient"
 import NavBarRow from "@/components/Navigation/NavBarRow"
 
 export default {
@@ -72,14 +71,13 @@ export default {
     // Everytime the route changes, check for auth status
     '$route': 'isAuthenticated'
   },
-  mounted(){
-    new apiClient().request({})
-  },
+
   methods: {
     async isAuthenticated () {
       this.authenticated = await this.$auth.isAuthenticated()
     },
     async logout () {
+      // Remove the widget from the DOM on path change
       await this.$auth.signOut()
     }
   }

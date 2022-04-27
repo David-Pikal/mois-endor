@@ -8,7 +8,7 @@
   <div v-else class="row-div">
     <tr class="row-values row-expense" v-shadow="6">
       <td class="item-cell">{{ formatDate(result[3]) }}</td>
-      <td class="item-cell"> - {{ result[1].toFixed(2) }} Kč</td>
+      <td class="item-cell"> - {{ result[0].toFixed(2) }} Kč</td>
     </tr>
   </div>
 

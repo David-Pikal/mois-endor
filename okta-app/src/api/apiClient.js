@@ -22,10 +22,10 @@ export default class ApiClient {
     }
   )
   {   
-    console.log(`Authorization: Bearer ${accessToken}`);
+    // console.log(`Authorization: Bearer ${accessToken}`);
     const config = { baseURL, headers: {'Authorization': 'Bearer ' + accessToken }, url, method, data, params}
     const request =  await axios.request(config)
-    console.log(request)
+    // console.log(request)
     return request.data
   }
   // END of Api Function
