@@ -1,5 +1,5 @@
 <template>
-    <div class="table-to-column">
+    <div class="table">
         <div class="hadline">
             <h2>Finance balance</h2>
             <h2>{{ currentBalance + currentOutFinances }} Kč</h2>
@@ -112,6 +112,7 @@ export default {
                 }
             )
             this.currentBalance = response
+            console.log(this.currentBalance)
         },
 
         async getOutSum() {
@@ -124,17 +125,20 @@ export default {
         sumMyVaules() {
             for (let i = 0; i < this.currentOutFinancesArray.length; i++) { 
                 const item = this.currentOutFinancesArray[i]
+                console.log(item)
                 if (item.incomeExpenseType == 0) {
                     this.currentOutFinances += item.value
                 } else {
                     this.currentOutFinances -= item.value
                 }
+                console.log(this.currentOutFinances)
             }
         },
 
         async getEvolution() {
             this.setupEvolutionDates()
             this.setupEvolutionValues()
+            console.log(this.evolutionValues)
         },
 
         async setupEvolutionDates() {
@@ -152,6 +156,7 @@ export default {
                 const backDay = new Date(this.evolutionDates[i])
                 const distancePast = new Date(this.evolutionDates[i])
                 distancePast.setDate(backDay.getDate() - this.distanceNum)
+                console.log(distancePast)
                 this.getDataWithIndex({ dateFrom:distancePast.toISOString(), dateTo:backDay.toISOString(), index:i })
                 this.getTransactionsWithIndex({ dateFrom:distancePast.toISOString(), dateTo:backDay.toISOString(), index:i })
             }
@@ -167,6 +172,7 @@ export default {
                 }
             )
             this.evolutionValues[index] = response
+            console.log(this.evolutionValues[index])
         },
 
         async getTransactionsWithIndex({ dateFrom, dateTo, index }) {
@@ -216,6 +222,25 @@ export default {
 
 <style scoped>
 
+.table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hadline {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.ccsMyChart {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
 .div-setting {
     display: flex;
     flex-direction: column;
@@ -234,6 +259,12 @@ export default {
 .main-div {
     text-align: center;
     padding: 30px;
+}
+
+.chartButton {
+  padding: 20px;
+  width: 200px;
+  margin: 20px;
 }
 
 </style>

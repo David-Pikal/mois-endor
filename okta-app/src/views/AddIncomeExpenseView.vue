@@ -53,23 +53,19 @@
 
 <script>
  
-
 import apiClient from "@/api/apiClient"
 import { useValidator } from 'balm-ui';
 import IncomeExpenseRow from "@/components/IncomeExpense/IncomeExpenseRow"
-
 
 const validations = {
   date: { label: 'Date', validator: 'required' },
   amount: { label: 'Amount', validator: 'required' }
 };
 
-
 const options = [
   { label: 'Income', value: 0 },
   { label: 'Expense', value: 1 }
 ]
-
 
 export default {
   components:{ IncomeExpenseRow },
@@ -100,6 +96,9 @@ export default {
 
       if (valid) {
         this.$toast('ok');
+        console.log(this.formData.amount)
+        console.log(this.formData.date)
+        console.log(this.formData.incomeOrExpense)
         const token = this.$auth.getAccessToken()
         const response = await new apiClient().getMyApi(
           {
@@ -123,5 +122,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.container-title {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container-form {
+  margin: 30px 0px;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.add-button {
+  width: 200px;
+}
+
 </style>

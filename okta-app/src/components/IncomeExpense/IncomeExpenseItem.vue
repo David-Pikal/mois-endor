@@ -1,14 +1,14 @@
 <template>
   <div class="row-div" v-if="filterDate(result[1])">
 
-    <tr v-if="result[0] == 0" class="row-values row-income" v-shadow="6">
-      <td class="item-cell">{{ formatDate(result[1]) }}</td>
-      <td class="item-cell" v-if="result[0] == 0"> + {{ result[2].toFixed(2) }} Kč</td>
+    <tr v-if="result[0] == 0" class="row row-income" v-shadow="6">
+      <td class="item">{{ formatDate(result[1]) }}</td>
+      <td class="item" v-if="result[0] == 0"> + {{ result[2].toFixed(2) }} Kč</td>
     </tr>
 
-    <tr v-if="result[0] == 1" class="row-values row-expense" v-shadow="6">
-      <td class="item-cell">{{ formatDate(result[1]) }}</td>
-      <td class="item-cell" v-if="result[0] == 1"> - {{ (result[2].toFixed(2)) }} Kč</td>
+    <tr v-if="result[0] == 1" class="row row-expense" v-shadow="6">
+      <td class="item">{{ formatDate(result[1]) }}</td>
+      <td class="item" v-if="result[0] == 1"> - {{ result[2].toFixed(2) }} Kč</td>
     </tr>
   </div>
 </template>
@@ -54,5 +54,32 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+
+.item {
+ padding: 20px; 
+}
+
+
+.row-income {
+  background: rgb(215, 255, 215);
+}
+
+.row-expense {
+  background: rgb(255, 215, 215);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.row-div {
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+}
+
 </style>

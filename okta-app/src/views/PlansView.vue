@@ -62,12 +62,10 @@
 
 <script>
  
-
 import apiClient from "@/api/apiClient"
 import { useValidator } from 'balm-ui';
 import PlanRow from "@/components/Plan/PlanRow"
 import PlanHome from "@/components/Plan/PlanHome"
-
 
 const validations = {
   title: { label: 'Title', validator: 'required' },
@@ -75,7 +73,6 @@ const validations = {
   startDate: { label: 'Start Date', validator: 'required' },
   endDate: { label: 'End Date', validator: 'required' },
 };
-
 
 export default {
   components:{ PlanRow, PlanHome },
@@ -99,12 +96,17 @@ export default {
   methods: {
 
     async onSubmit() {
+      console.log("tady")
       let result = this.balmUI.validate(this.formData);
       let { valid, message } = result;
       this.message = message;
 
       if (valid) {
         this.$toast('ok');
+        console.log(this.formData.title)
+        console.log(this.formData.value)
+        console.log(this.formData.startDate)
+        console.log(this.formData.endDate)
         const user = await this.$auth.getUser()
         const token = this.$auth.getAccessToken()
         const response = await new apiClient().getMyApi(
@@ -133,5 +135,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.container-title {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container-form {
+  margin: 30px 0px;
+  padding: 30px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.add-button {
+  width: 200px;
+}
+
 </style>

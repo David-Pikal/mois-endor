@@ -2,6 +2,25 @@ import axios from "axios"
 
 export default class ApiClient {
 
+  // @TODO DELETE - Training Function
+  async request(
+    { 
+      baseURL = "https://api.publicapis.org", 
+      url = "/entries", 
+      method = "GET", 
+      data = {}, 
+      params = {}
+    }
+  )
+  {
+    console.log(data)
+    const config = { baseURL, url, method, params }
+   const request =  await axios.request(config)
+   return request.data
+  }
+  // END of Training Function
+
+
   /**
    * Api Function
    * @param accessToken  - Required parameter: Token type: Bearer

@@ -1,13 +1,13 @@
 <template>
     <div class="row-div">
-    <tr class="row-values" v-shadow="6">
+    <tr class="row" v-shadow="6">
         <div class="row-content">
-            <td class="item-cell">{{ result[0] }}</td>
-            <td class="item-cell">{{ formatDate(result[1]) }}</td>
-            <td class="item-cell">{{ formatDate(result[2]) }}</td>
-            <td class="item-cell">{{ result[3].toFixed(2) }} Kč</td>
+            <td class="item">{{ result[0] }}</td>
+            <td class="item">{{ formatDate(result[1]) }}</td>
+            <td class="item">{{ formatDate(result[2]) }}</td>
+            <td class="item">{{ result[3].toFixed(2) }} Kč</td>
         </div>
-        <td class="item-cell">
+        <td class="item">
             <ui-fab extended @click="removeRow(result[4])">
                 <span>Delete</span>
                 <template #after="{ iconClass }">
@@ -38,6 +38,7 @@ export default {
           this.item.endDate,
           this.item.value,
           this.item.id,
+          // this.item.userID,
         ]
     }
   },
@@ -56,10 +57,10 @@ export default {
     async removeRow(idItem){
         const token = this.$auth.getAccessToken()
         await new apiClient().getMyApi({
-              accessToken:token,
-              method: "DELETE", 
-              url: "/plan/project/delete",
-              params: { id: idItem },
+            accessToken:token,
+            method: "DELETE", 
+            url: "/plan/project/delete",
+            params: { id: idItem },
             }
         )
         await new apiClient().getMyApi({accessToken:token})
@@ -69,5 +70,29 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+
+.item {
+ padding: 20px; 
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.row-div {
+  margin: auto;
+  width: 100%;
+  padding: 10px;
+}
+
 </style>

@@ -1,8 +1,8 @@
 <template>
-    <div class="table-wide">
-        <table v-if="!edit" class="table-wide">
+    <div class="table">
+        <table v-if="!edit" class="table">
             <div class="row-div">
-                <tr class="row-header" v-shadow="6">
+                <tr class="row" v-shadow="6">
                     <td><h3>Title</h3></td>
                     <td><h3>Start date</h3></td>
                     <td><h3>End date</h3></td>
@@ -12,9 +12,9 @@
             </div>
             <PlanItem v-for="(item, index) in sortMe()" :key="index" :item="item"/>
         </table>
-        <table v-else class="table-wide">
+        <table v-else class="table">
             <div class="row-div">
-                <tr class="row-header" v-shadow="6">
+                <tr class="row" v-shadow="6">
                     <td><h3>Title</h3></td>
                     <td><h3>Start date</h3></td>
                     <td><h3>End date</h3></td>
@@ -75,5 +75,44 @@ export default {
 
 
 
-<style>
+<style scoped>
+
+.table {
+  width: 100%;
+}
+
+.row-div-date {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.row-div-button {
+  margin: auto;
+  width: 100%;
+}
+
+.row-div {
+  margin: auto;
+  width: 90%;
+  padding: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.row-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.item-butt {
+ padding: 20px; 
+}
+
 </style>

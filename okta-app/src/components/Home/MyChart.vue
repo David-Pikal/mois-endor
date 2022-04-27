@@ -72,5 +72,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.chartDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.chartButton {
+  padding: 20px;
+  margin: 20px;
+}
+
 </style>
