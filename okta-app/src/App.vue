@@ -88,21 +88,4 @@ export default {
 
 
 <style>
-
-*{
-  margin: 0;
-  padding: 0;
-}
-
-#content-view {
-  padding: 90px 25px 25px 25px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-a {
-  display: block;
-  text-decoration: none;
-}
-
 </style>

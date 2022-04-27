@@ -20,12 +20,5 @@ export default {
 </script>
 
 
-<style scoped>
-
-.container-title {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}
-
+<style>
 </style>

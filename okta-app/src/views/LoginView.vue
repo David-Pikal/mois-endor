@@ -21,7 +21,6 @@ export default {
     })
   },
   unmounted () {
-    // Remove the widget from the DOM on path change
     oktaSignIn.remove()
   }
 }

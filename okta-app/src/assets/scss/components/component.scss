@@ -1,7 +1,129 @@
-body {
-  background: var(--color-primary);
+
+
+*{
+  margin: 0;
+  padding: 0;
 }
 
-:root {
-  --color-primary: black,
+a {
+  display: block;
+  text-decoration: none;
+}
+
+#content-view {
+  padding: 90px 25px 25px 25px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.row-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.table-wide {
+  width: 100%;
+}
+
+.table-to-column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-title {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container-form {
+  margin: 30px 0px;
+  padding: 30px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.add-button {
+  width: 200px;
+}
+
+.row-header {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.row-header-between {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.row-values {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row-income {
+  background: rgb(215, 255, 215);
+}
+
+.row-expense {
+  background: rgb(255, 215, 215);
+}
+
+.item-cell {
+  padding: 20px; 
+ }
+
+ .item-wide-center-cell {
+  text-align: center; 
+  padding: 20px; 
+  width: 100%;
+}
+
+.row-div {
+  margin: auto;
+  width: 90%;
+  padding: 10px;
+}
+
+.chartButton {
+  padding: 20px;
+  margin: 20px;
+}
+
+.chartDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.row-div-date {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.row-div-button {
+  margin: auto;
+  width: 100%;
+}
+
+
+.ccsMyChart {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+
+
+.hadline {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
 }

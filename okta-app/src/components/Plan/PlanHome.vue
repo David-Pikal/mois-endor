@@ -1,5 +1,5 @@
 <template>
-    <div class="table" v-shadow="6">
+    <div class="table-to-column" v-shadow="6">
         <div class="hadline">
             <h2>Plan balance</h2>
         </div>
@@ -75,28 +75,15 @@ export default {
         async setupEvolutionValues() {
             for (let i = 0; i < this.evolutionDates.length; i++) { 
                 this.evolutionValues[i] = 0
-                console.log("tady")
-                // var projectCount = 0
                 const date = this.evolutionDates[i]
                 const nextDay = date.setDate(date.getDate() + this.distanceNum)
                 for (let j = 0; j < this.fetchedData.length; j++) { 
-                    console.log(this.fetchedData)
                     const value = this.returnNumberPerMonth(this.fetchedData[j], date, nextDay)
-                    console.log(value)
                     if (value != null) {
-                        console.log("Tady")
                         this.evolutionValues[i] = this.evolutionValues[i] + value
-                        console.log(this.evolutionValues)
-                        // projectCount += 1
                     }
                 }
-                // console.log("Here")
-                // if (projectCount > 0) {
-                //     console.log("Here 2")
-                //     this.evolutionValues[i] = this.evolutionValues[i] / projectCount
-                // } 
             }
-            console.log(this.evolutionValues)
         },
 
         returnNumberPerMonth(item, dateFrom, dateTo) {
@@ -142,25 +129,5 @@ export default {
 }
 </script>
 
-<style scoped>
-
-.table {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.hadline {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  margin: 20px;
-}
-
-.ccsMyChart {
-    display: flex;
-    justify-content: center;
-    margin: 30px;
-}
-
+<style>
 </style>

@@ -50,8 +50,13 @@ export default {
         }
       }
     },
+
+    created(){
+        this.clickMe()
+    },
+
     methods: {
-      clickMe() {
+    clickMe() {
         this.chartData.labels.splice(0,100)
         for (let i = 0; i < this.someData.length; i++) { 
           this.chartData.datasets[0].data[i] = this.someData[i];
@@ -64,16 +69,5 @@ export default {
 }
 </script>
 
-<style scoped>
-
-.chartDiv {
-  display: flex;
-  flex-direction: column;
-}
-
-.chartButton {
-  padding: 20px;
-  margin: 20px;
-}
-
+<style>
 </style>
