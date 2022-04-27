@@ -51,16 +51,13 @@ export default {
 
     methods:{
         async getData(){
-            // const user = await this.$auth.getUser()
+            const user = await this.$auth.getUser()
             const token = this.$auth.getAccessToken()
             const response = await new apiClient().getMyApi(
                 {
                     accessToken:token,
                     url: "/plan/project/all", 
-                    params: { 
-                        // userID: user.sub 
-                        userID: 3 
-                    }, 
+                    params: {  userID: user.sub }, 
                 }
             )
             this.myData = response

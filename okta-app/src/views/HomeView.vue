@@ -1,11 +1,11 @@
 <template>
     
     <div class="container-title">
-      <h2>MY BANK</h2>
+      <h2>MY FINANCES</h2>
     </div>
 
     <div class="container-form" v-shadow="6">
-      <BankCard />
+      <BankCard/>
     </div>
       
 </template>

@@ -1,16 +1,48 @@
 <template>
     <div class="table">
         <div class="hadline">
-            <h2>Account balance</h2>
-            <h2>{{ currentBalance }} Kč</h2>
+            <h2>Finance balance</h2>
+            <h2>{{ currentBalance + currentOutFinances }} Kč</h2>
         </div>
-        <!-- <p>{{ evolutionValues }}</p> -->
         <ui-list-divider/>
+        <div class="hadline">
+            <h4>Bank balance</h4>
+            <h4>{{ currentBalance }} Kč</h4>
+            |
+            <h4>My Outs balance</h4>
+            <h4>{{ currentOutFinances }} Kč</h4>
+        </div>
+        <ui-list-divider/>
+        <div class="main-div">
+            <ui-button class="chartButton" @click="resetup" >Setup</ui-button>
+            <div class="div-setting">
+                
+                <div class="slider-div">
+                    <h4>Count of Columns : {{ scale }}</h4>
+                    <ui-slider class="just-slider" :min="4" :max="20" v-model="scale"></ui-slider>
+                    <ui-select v-model="distance" :options="options"  @selected="onSelected($event)">
+                        Period
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+        <ui-list-divider/>
+
         <div class="ccsMyChart">
-            <MyChart :someData="evolutionValues" :someLabels="evolutionFormatedDates"/>
+            <MyChart 
+            :someData="evolutionValues" 
+            :someLabels="evolutionFormatedDates" 
+            :key="componentKey"
+            :isTransaction=false
+            />
         </div>
         <div class="ccsMyChart">
-            <MyChart :someData="transactionValues" :someLabels="evolutionFormatedDates"/>
+            <MyChart 
+            :someData="transactionValues" 
+            :someLabels="evolutionFormatedDates" 
+            :key="componentKey" 
+            :isTransaction=true
+            />
         </div>
     </div>
     
@@ -21,12 +53,22 @@ import MyChart from "./MyChart"
 import apiClient from "@/api/apiClient"
 import dayjs from 'dayjs'
 
+const options = [
+  { label: 'weeks', value: 'weeks' },
+  { label: 'months', value: 'months' },
+  { label: 'quarter', value: 'quarter' },
+  { label: 'half years', value: 'half years' },
+  { label: 'years', value: 'years' }
+]
+
 export default {
     name: "BankCard",
     components:{ MyChart },
     data(){
         return { 
             currentBalance: 0,
+            currentOutFinances: 0,
+            currentOutFinancesArray: [],
             date: [],
             distance: "months",
             distanceNum: 7,
@@ -35,6 +77,8 @@ export default {
             evolutionFormatedDates: [],
             evolutionValues: [],
             transactionValues: [],
+            componentKey: 0,
+            options,
         }
     },
 
@@ -44,6 +88,7 @@ export default {
         this.date[0] = '1000-01-01'
         this.date[1] = '3000-01-01'
         this.filterTransfers()
+        this.getOutSum()
         await this.getEvolution()
         for (let i = 0; i < this.evolutionDates.length; i++) { 
             this.evolutionFormatedDates[i] = dayjs(this.evolutionDates[i]).format('DD. MM. YYYY');
@@ -70,6 +115,26 @@ export default {
             console.log(this.currentBalance)
         },
 
+        async getOutSum() {
+            const token = this.$auth.getAccessToken()
+            const response = await new apiClient().getMyApi({ accessToken:token })
+            this.currentOutFinancesArray = response
+            this.sumMyVaules()
+        },
+
+        sumMyVaules() {
+            for (let i = 0; i < this.currentOutFinancesArray.length; i++) { 
+                const item = this.currentOutFinancesArray[i]
+                console.log(item)
+                if (item.incomeExpenseType == 0) {
+                    this.currentOutFinances += item.value
+                } else {
+                    this.currentOutFinances -= item.value
+                }
+                console.log(this.currentOutFinances)
+            }
+        },
+
         async getEvolution() {
             this.setupEvolutionDates()
             this.setupEvolutionValues()
@@ -78,14 +143,10 @@ export default {
 
         async setupEvolutionDates() {
             this.setupDistance()
-            
-
-            
             const currentDay = new Date()
             for (let i = 0; i <= this.scale; i++) { 
                 const weekAgo = new Date(currentDay.getTime())
                 weekAgo.setDate(currentDay.getDate() - (this.distanceNum * i) )
-                //console.log(weekAgo)
                 this.evolutionDates[i] = weekAgo
             }
         },
@@ -147,6 +208,13 @@ export default {
                     this.distanceNum = 7
                     break;
             }
+        },
+
+        async resetup(){
+            await this.getEvolution()
+            for (let i = 0; i < this.evolutionDates.length; i++) { 
+                this.evolutionFormatedDates[i] = dayjs(this.evolutionDates[i]).format('DD. MM. YYYY');
+            }
         }
     },
 }
@@ -171,6 +239,32 @@ export default {
     display: flex;
     justify-content: center;
     margin: 30px;
+}
+
+.div-setting {
+    display: flex;
+    flex-direction: column;
+}
+
+.slider-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.just-slider {
+    width: 30%;
+}
+
+.main-div {
+    text-align: center;
+    padding: 30px;
+}
+
+.chartButton {
+  padding: 20px;
+  width: 200px;
+  margin: 20px;
 }
 
 </style>

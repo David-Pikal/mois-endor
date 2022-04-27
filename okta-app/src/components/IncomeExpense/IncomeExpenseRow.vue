@@ -9,8 +9,8 @@
         <table v-if="!edit" class="table">
             <div class="row-div">
                 <tr class="row" v-shadow="6">
-                    <td><h2>Date</h2></td>
-                    <td><h2>Value</h2></td>
+                    <td><h3>Date</h3></td>
+                    <td><h3>Value</h3></td>
                 </tr>
             </div>
             <IncomeExpenseItem v-for="(item, index) in sortMe()" :key="index" :item="item" :dateStart="date[0]" :dateEnd="date[1]" />

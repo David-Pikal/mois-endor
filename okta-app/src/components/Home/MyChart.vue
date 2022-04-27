@@ -15,6 +15,11 @@ export default {
     name: "MyChart",
     components: { Bar },
     props: {
+      isTransaction: {
+        type: Boolean,
+        required: true
+      }, 
+        
       someData: {
         type: Object,
         required: true
@@ -36,12 +41,12 @@ export default {
     data() {
       return {
         chartData: {
-          labels: [ 'January', 'February', 'March'],
+          labels: [],
           datasets: [
             {
               label: 'Data One',
               backgroundColor: '#f87979',
-              data: [0]
+              data: []
             }
           ]
         },
@@ -59,6 +64,9 @@ export default {
         for (let i = this.someLabels.length - 1; i >= 0; i--) {
           this.chartData.labels.push(this.someLabels[i])
         }
+
+        this.chartData.datasets[0].label = this.isTransaction ? "Transaction" : "Payments"
+        console.log(this.label)
       }
     }
 }

@@ -107,7 +107,7 @@ export default {
         console.log(this.formData.value)
         console.log(this.formData.startDate)
         console.log(this.formData.endDate)
-        // const user = await this.$auth.getUser()
+        const user = await this.$auth.getUser()
         const token = this.$auth.getAccessToken()
         const response = await new apiClient().getMyApi(
           {
@@ -119,12 +119,10 @@ export default {
               "value": this.formData.value,
               "startDate": this.formData.startDate,
               "endDate": this.formData.endDate,
-              "userID": 3
+              "userID": user.sub
               }
           })
 
-        // "userID": user.sub
-        // TODO change back
         this.formData.title = ''
         this.formData.value = ''
         this.formData.startDate = ''

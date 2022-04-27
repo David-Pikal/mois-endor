@@ -15,7 +15,7 @@
 import MyChart from "./PlanChart"
 import apiClient from "@/api/apiClient"
 import dayjs from 'dayjs'
-// import moment from 'moment';
+import moment from 'moment';
 
 export default {
     name: "PlanHome",
@@ -24,9 +24,9 @@ export default {
         return { 
             currentBalance: 0,
             date: [],
-            distance: "weeks",
+            distance: "months",
             distanceNum: 7,
-            scale: 5,
+            scale: 15,
             evolutionDates: [],
             evolutionFormatedDates: [],
             evolutionValues: [],
@@ -36,10 +36,6 @@ export default {
 
 
     async mounted(){
-        this.loaded = false
-        this.date[0] = '1000-01-01'
-        this.date[1] = '3000-01-01'
-        this.filterTransfers()
         await this.getEvolution()
         for (let i = 0; i < this.evolutionDates.length; i++) { 
             this.evolutionFormatedDates[i] = dayjs(this.evolutionDates[i]).format('DD. MM. YYYY');
@@ -47,64 +43,80 @@ export default {
     },
 
     methods:{
-        async filterTransfers() {
-            const dateStart = new Date(this.date[0]).toISOString()
-            const dateEnd = new Date(this.date[1]).toISOString()
-            this.getData({ dateFrom:dateStart, dateTo:dateEnd })
-        },
-
-        async getData({ dateFrom, dateTo }) {
-            const token = this.$auth.getAccessToken()
-            const response = await new apiClient().getMyApi(
-                {
-                    accessToken:token,
-                    url: "/bank/payment/value", 
-                    params: { dateFrom: dateFrom, dateTo: dateTo }, 
-                }
-            )
-            this.currentBalance = response
-            console.log(this.currentBalance)
-        },
-
         async getEvolution() {
+            this.setupDistance()
+            await this.getData()
             this.setupEvolutionDates()
             this.setupEvolutionValues()
-            console.log(this.evolutionValues)
         },
 
-        async setupEvolutionDates() {
-            this.setupDistance()
-            
-
-            
-            const currentDay = new Date()
-            for (let i = 0; i <= this.scale; i++) { 
-                const weekAgo = new Date(currentDay.getTime())
-                weekAgo.setDate(currentDay.getDate() - (this.distanceNum * i) )
-                console.log(weekAgo)
-                this.evolutionDates[i] = weekAgo
-            }
-        },
-
-        async setupEvolutionValues() {
-            
-        },
-
-        async getDataWithIndex({ index }) {
+        async getData() {
+            const user = await this.$auth.getUser()
             const token = this.$auth.getAccessToken()
             const response = await new apiClient().getMyApi(
                 {
                     accessToken:token,
                     url: "/plan/project/all", 
-                    params: { userID: 3 }, 
+                    params: {  userID: user.sub }, 
                 }
             )
-            this.data = response
-            this.evolutionValues[index] = 
-            console.log(this.evolutionValues[index])
+            this.fetchedData = response
         },
 
-        setupDistance(){
+        async setupEvolutionDates() {
+            const currentDay = new Date()
+            for (let i = 0; i <= this.scale; i++) { 
+                const weekAgo = new Date(currentDay.getTime())
+                weekAgo.setDate(currentDay.getDate() + (this.distanceNum * i) )
+                this.evolutionDates[i] = weekAgo
+            }
+        },
+
+        async setupEvolutionValues() {
+            for (let i = 0; i < this.evolutionDates.length; i++) { 
+                this.evolutionValues[i] = 0
+                console.log("tady")
+                // var projectCount = 0
+                const date = this.evolutionDates[i]
+                const nextDay = date.setDate(date.getDate() + this.distanceNum)
+                for (let j = 0; j < this.fetchedData.length; j++) { 
+                    console.log(this.fetchedData)
+                    const value = this.returnNumberPerMonth(this.fetchedData[j], date, nextDay)
+                    console.log(value)
+                    if (value != null) {
+                        console.log("Tady")
+                        this.evolutionValues[i] = this.evolutionValues[i] + value
+                        console.log(this.evolutionValues)
+                        // projectCount += 1
+                    }
+                }
+                // console.log("Here")
+                // if (projectCount > 0) {
+                //     console.log("Here 2")
+                //     this.evolutionValues[i] = this.evolutionValues[i] / projectCount
+                // } 
+            }
+            console.log(this.evolutionValues)
+        },
+
+        returnNumberPerMonth(item, dateFrom, dateTo) {
+          const start = item.startDate
+          const end = item.endDate
+          const isInside = moment(dateFrom).isBetween(start, end, 'days', []) || moment(dateTo).isBetween(start, end, 'days', [])
+          if (isInside) {
+              return this.getValuePerMonth(item.value, start, end)
+          }
+        },
+
+        getValuePerMonth(value, dateStart, dateEnd) {
+            const start = new Date(dateStart);
+            const end = new Date(dateEnd);
+            const years = end.getFullYear() - start.getFullYear()
+            const months = (12 * years) + (end.getMonth() - start.getMonth() + 1)
+            return value / months
+        },
+
+         setupDistance(){
             switch (this.distance) {
                 case "weeks":
                     this.distanceNum = 7
@@ -126,14 +138,6 @@ export default {
                     break;
             }
         },
-
-        // returnNumberPerMonth(item, dateFrom, dateTo) {
-        //   const startDate = item.startDate
-        //   const end = item.endDate
-        //   const value = item.value
-        //   const isInside = 
-        //   moment()          
-        // }
     },
 }
 </script>

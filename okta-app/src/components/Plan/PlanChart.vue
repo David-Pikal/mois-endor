@@ -56,7 +56,7 @@ export default {
         for (let i = 0; i < this.someData.length; i++) { 
           this.chartData.datasets[0].data[i] = this.someData[i];
         }
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < this.someLabels.length; i++) {
           this.chartData.labels.push(this.someLabels[i])
         }
       }
