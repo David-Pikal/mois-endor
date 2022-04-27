@@ -76,7 +76,6 @@ export default {
       options,
       formData: { date: '', amount: '', incomeOrExpense: 0 },
       message: '',
-      componentKey: 0,
       items: [
         { text: 'ADD RECORD', icon: 'add_circle'},
         { text: 'INCOME / EXPENSE', icon: 'list'},
