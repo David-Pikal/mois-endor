@@ -1,12 +1,12 @@
 <template>
     <div class="row-div" v-if="filterDate(result[1])">
-    <tr class="row" v-shadow="6">
+    <tr class="row-values" v-shadow="6">
         <div class="row-content">
-            <td class="item">{{ formatDate(result[1]) }}</td>
-            <td class="item" v-if="result[0] == 0"> + {{ result[2].toFixed(2) }} Kč</td>
-            <td class="item" v-if="result[0] == 1"> - {{ result[2].toFixed(2) }} Kč</td>
+            <td class="item-cell">{{ formatDate(result[1]) }}</td>
+            <td class="item-cell" v-if="result[0] == 0"> + {{ result[2].toFixed(2) }} Kč</td>
+            <td class="item-cell" v-if="result[0] == 1"> - {{ result[2].toFixed(2) }} Kč</td>
         </div>
-        <td class="item">
+        <td class="item-cell">
             <ui-fab extended @click="removeRow(result[3])">
                 <span>Delete</span>
                 <template #after="{ iconClass }">
@@ -68,29 +68,5 @@ export default {
 }
 </script>
 
-<style scoped>
-
-
-.item {
- padding: 20px; 
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-}
-
-.row-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.row-div {
-  margin: auto;
-  width: 80%;
-  padding: 10px;
-}
-
+<style>
 </style>

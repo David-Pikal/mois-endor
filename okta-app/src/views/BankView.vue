@@ -49,24 +49,5 @@ export default {
 
 
 
-<style scoped>
-
-
-.container-title {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}
-
-.container-form {
-  margin: 30px;
-  padding: 30px;
-  display: flex;
-  justify-content: center;
-}
-
-.add-button {
-  width: 200px;
-}
-
+<style>
 </style>

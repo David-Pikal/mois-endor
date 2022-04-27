@@ -1,5 +1,5 @@
 <template>
-    <div class="table">
+    <div class="table-wide">
         <div class="row-div-date">
             <ui-rangepicker v-model="date" outlined :labels="['Start Date', 'End Date']">
                 <template #separator>-</template>
@@ -7,9 +7,9 @@
         <ui-button class="row-div-button" @click="filterTransfers">Filter</ui-button>
         </div>
     
-        <table class="table">
+        <table class="table-wide">
             <div class="row-div">
-                <tr class="row" v-shadow="6">
+                <tr class="row-header-between" v-shadow="6">
                     <td><h3>Date</h3></td>
                     <td><h3>Value</h3></td>
                 </tr>
@@ -75,33 +75,5 @@ export default {
 
 
 
-<style scoped>
-
-.table {
-  width: 100%;
-}
-
-.row-div-date {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-}
-
-.row-div-button {
-  margin: auto;
-  width: 100%;
-}
-
-.row-div {
-  margin: auto;
-  width: 80%;
-  padding: 10px;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-}
-
+<style>
 </style>
